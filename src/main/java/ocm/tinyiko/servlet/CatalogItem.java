@@ -35,7 +35,5 @@ public class CatalogItem {
 	public void setSku(String sku) {
 		this.sku = sku;
 	}
-	
-	
 
 }
