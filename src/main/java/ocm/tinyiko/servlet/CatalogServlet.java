@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.AsyncContext;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet(urlPatterns = "/CatalogServlet", asyncSupported = true)
+@WebServlet(urlPatterns= "/CatalogServlet")
 public class CatalogServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -26,41 +27,23 @@ public class CatalogServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		AsyncContext asyncContext = request.startAsync();
-		
-		//starting a new thread
-		asyncContext.start(new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(1000);
-					System.out.println("Print the response");
-					System.out.println("Response return by  thread: " + Thread.currentThread().getName());
-					returnResponse(request, response);
-					asyncContext.complete();
-					
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-			}
-		});
-		
-		System.out.println("initial thread, Response return by thread: " + Thread.currentThread().getName());
-	}
-
-	private void returnResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		String name = request.getParameter("name");
 		String manufacture = request.getParameter("manufacture");
 		String sku = request.getParameter("sku");
 		
+		response.setHeader("some Header", "some Header values");
+		
 		Catalog.addItem(new CatalogItem(name, manufacture, sku));
 		
-		response.setHeader("some Header", "some Header values");
+		request.setAttribute("items", Catalog.getItems());
+		RequestDispatcher dispatcher = request.getRequestDispatcher("list.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	
+/*private void returnResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
 		
 		PrintWriter out = response.getWriter();
 		
@@ -78,6 +61,6 @@ public class CatalogServlet extends HttpServlet {
 		out.println("</table>");
 		out.println("</body>");
 		out.println("</html>");
-	}
+	}*/
 
 }
