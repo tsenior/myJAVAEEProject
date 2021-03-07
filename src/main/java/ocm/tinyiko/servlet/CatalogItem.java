@@ -1,9 +1,5 @@
 package ocm.tinyiko.servlet;
 
-/**
- * @author tinyiko
- *
- */
 public class CatalogItem {
 	
 	private String name;

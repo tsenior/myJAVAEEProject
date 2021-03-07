@@ -15,7 +15,6 @@ public class ParameterLoggingFilter implements Filter {
     public ParameterLoggingFilter() {
     }
 
-
 	public void destroy() {
 	}
 

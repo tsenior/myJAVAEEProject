@@ -41,26 +41,4 @@ public class CatalogServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-	
-/*private void returnResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-		
-		PrintWriter out = response.getWriter();
-		
-		out.println("<html>");
-		out.println("<head></head>");
-		out.println("<body>");
-		out.println("<table>");
-		for(CatalogItem item:Catalog.getItems()) {
-			out.println("<tr>");
-			out.println("<td>");
-			out.print(item.getName());
-			out.println("</td>");
-			out.println("</tr>");
-		}
-		out.println("</table>");
-		out.println("</body>");
-		out.println("</html>");
-	}*/
-
 }
